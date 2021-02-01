@@ -25,8 +25,8 @@
     "lib"
   ],
   "dependencies": {
-    "@types/codemirror": "^0.0.102",
-    "codemirror": "^5.0.0",
+    "@codemirror/basic-setup": "^0.17.1",
+    "@codemirror/lang-markdown": "^0.17.1",
     "rehype-raw": "^5.0.0",
     "rehype-sanitize": "^4.0.0",
     "rehype-stringify": "^8.0.0",

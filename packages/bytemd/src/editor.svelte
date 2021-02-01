@@ -1,13 +1,33 @@
+<svelte:options immutable={true} />
+
 <script lang="ts">
-  import type { Editor } from 'codemirror';
-  import type {} from 'codemirror/addon/display/placeholder';
   import type { Root, Element } from 'hast';
   import type { BytemdPlugin, EditorProps, ViewerProps } from './types';
   import { onMount, createEventDispatcher, onDestroy, tick } from 'svelte';
   import { debounce, throttle } from 'lodash-es';
+
+  import { markdown } from '@codemirror/lang-markdown';
   import Toolbar from './toolbar.svelte';
   import Viewer from './viewer.svelte';
   import { createUtils } from './editor';
+
+  import { keymap, highlightSpecialChars, EditorView } from '@codemirror/view';
+  import { Prec, EditorState } from '@codemirror/state';
+  import { history, historyKeymap } from '@codemirror/history';
+  import { foldKeymap } from '@codemirror/fold';
+  import { indentOnInput } from '@codemirror/language';
+  import { defaultKeymap } from '@codemirror/commands';
+  import { bracketMatching } from '@codemirror/matchbrackets';
+  import {
+    closeBrackets,
+    closeBracketsKeymap,
+  } from '@codemirror/closebrackets';
+  import { searchKeymap, highlightSelectionMatches } from '@codemirror/search';
+  import { autocompletion, completionKeymap } from '@codemirror/autocomplete';
+  import { commentKeymap } from '@codemirror/comment';
+  import { rectangularSelection } from '@codemirror/rectangular-selection';
+  import { defaultHighlightStyle } from '@codemirror/highlight';
+  import { lintKeymap } from '@codemirror/lint';
 
   export let value: EditorProps['value'] = '';
   export let plugins: EditorProps['plugins'];
@@ -23,8 +43,8 @@
     plugins,
     sanitize,
   };
-  let textarea: HTMLTextAreaElement;
-  let editor: Editor;
+  let textarea: HTMLElement;
+  let editor: EditorView;
   let activeTab = 0;
   let fullscreen = false;
 
@@ -115,14 +135,14 @@
 
   function on() {
     cbs = (plugins ?? []).map((p) => p.editorEffect?.(context));
-    editor.on('scroll', editorScrollHandler);
+    // editor.on('scroll', editorScrollHandler);
     previewEl.addEventListener('scroll', previewScrollHandler, {
       passive: true,
     });
   }
   function off() {
     cbs.forEach((cb) => cb && cb());
-    editor.off('scroll', editorScrollHandler);
+    // editor.off('scroll', editorScrollHandler);
     previewEl.removeEventListener('scroll', previewScrollHandler);
   }
 
@@ -134,8 +154,10 @@
     };
   }, previewDebounce);
 
-  $: if (editor && value !== editor.getValue()) {
-    editor.setValue(value);
+  $: if (editor && value !== editor.state.doc.toString()) {
+    editor.dispatch({
+      changes: { from: 0, insert: value },
+    });
   }
   $: if (value != null) updateViewerValue();
 
@@ -198,40 +220,54 @@
   }, 1000);
 
   onMount(async () => {
-    const [codemirror] = await Promise.all([
-      import('codemirror'),
-      // @ts-ignore
-      import('codemirror/mode/gfm/gfm'),
-      // @ts-ignore
-      import('codemirror/mode/yaml-frontmatter/yaml-frontmatter'),
-      import('codemirror/addon/display/placeholder'),
-    ]);
-
-    editor = codemirror.fromTextArea(textarea, {
-      mode: 'yaml-frontmatter',
-      lineWrapping: true,
-      ...editorConfig,
+    editor = new EditorView({
+      state: EditorState.create({
+        extensions: [
+          highlightSpecialChars(),
+          history(),
+          // drawSelection(),
+          EditorState.allowMultipleSelections.of(true),
+          indentOnInput(),
+          Prec.fallback(defaultHighlightStyle),
+          bracketMatching(),
+          closeBrackets(),
+          autocompletion(),
+          rectangularSelection(),
+          highlightSelectionMatches(),
+          keymap.of([
+            ...closeBracketsKeymap,
+            ...defaultKeymap,
+            ...searchKeymap,
+            ...historyKeymap,
+            ...foldKeymap,
+            ...commentKeymap,
+            ...completionKeymap,
+            ...lintKeymap,
+          ]),
+          markdown(),
+        ],
+      }),
+      parent: textarea,
     });
 
-    // https://github.com/codemirror/CodeMirror/issues/2428#issuecomment-39315423
-    editor.addKeyMap({
-      'Shift-Tab': 'indentLess',
-    });
-    editor.setValue(value);
-    editor.on('change', (doc, change) => {
-      dispatch('change', { value: editor.getValue() });
-    });
+    // // https://github.com/codemirror/CodeMirror/issues/2428#issuecomment-39315423
+    // editor.addKeyMap({
+    //   'Shift-Tab': 'indentLess',
+    // });
+    // editor.setValue(value);
+    // editor.on('change', (doc, change) => {
+    //   dispatch('change', { value: editor.getValue() });
+    // });
 
     // No need to call `on` because cm instance would change once after init
   });
   onDestroy(off);
 </script>
 
-<svelte:options immutable={true} />
-
 <div
   class={`bytemd bytemd-mode-${mode}${fullscreen ? ' bytemd-fullscreen' : ''}`}
-  bind:this={el}>
+  bind:this={el}
+>
   <Toolbar
     {context}
     {mode}
@@ -241,17 +277,19 @@
     on:tab={setActiveTab}
     on:fullscreen={() => {
       fullscreen = !fullscreen;
-    }} />
+    }}
+  />
   <div class="bytemd-body">
     <div
       class="bytemd-editor"
-      style={mode === 'tab' && activeTab === 1 ? 'display:none' : undefined}>
-      <textarea bind:this={textarea} style="display:none" />
-    </div>
+      style={mode === 'tab' && activeTab === 1 ? 'display:none' : undefined}
+      bind:this={textarea}
+    />
     <div
       bind:this={previewEl}
       class="bytemd-preview"
-      style={mode === 'tab' && activeTab === 0 ? 'display:none' : undefined}>
+      style={mode === 'tab' && activeTab === 0 ? 'display:none' : undefined}
+    >
       <Viewer {...viewerProps} on:hast={updateHast} />
     </div>
   </div>
