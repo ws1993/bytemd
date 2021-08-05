@@ -3,6 +3,89 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.13](https://github.com/bytedance/bytemd/compare/v1.10.12...v1.10.13) (2021-07-22)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.12](https://github.com/bytedance/bytemd/compare/v1.10.11...v1.10.12) (2021-07-22)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.11](https://github.com/bytedance/bytemd/compare/v1.10.10...v1.10.11) (2021-07-22)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.10](https://github.com/bytedance/bytemd/compare/v1.10.9...v1.10.10) (2021-07-22)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.9](https://github.com/bytedance/bytemd/compare/v1.10.8...v1.10.9) (2021-07-22)
+
+
+### Bug Fixes
+
+* **frontmatter:** types error ([933da7e](https://github.com/bytedance/bytemd/commit/933da7e172186335ca3de5de600592da04aa2f80))
+
+
+
+
+
+## [1.10.8](https://github.com/bytedance/bytemd/compare/v1.10.7...v1.10.8) (2021-07-11)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.7](https://github.com/bytedance/bytemd/compare/v1.10.6...v1.10.7) (2021-07-11)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.6](https://github.com/bytedance/bytemd/compare/v1.10.5...v1.10.6) (2021-07-08)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.5](https://github.com/bytedance/bytemd/compare/v1.10.4...v1.10.5) (2021-07-08)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
+## [1.10.4](https://github.com/bytedance/bytemd/compare/v1.10.3...v1.10.4) (2021-07-08)
+
+**Note:** Version bump only for package @bytemd/plugin-frontmatter
+
+
+
+
+
 ## [1.10.2](https://github.com/bytedance/bytemd/compare/v1.10.1...v1.10.2) (2021-07-02)
 
 **Note:** Version bump only for package @bytemd/plugin-frontmatter

@@ -3,6 +3,97 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.13](https://github.com/bytedance/bytemd/compare/v1.10.12...v1.10.13) (2021-07-22)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.12](https://github.com/bytedance/bytemd/compare/v1.10.11...v1.10.12) (2021-07-22)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.11](https://github.com/bytedance/bytemd/compare/v1.10.10...v1.10.11) (2021-07-22)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.10](https://github.com/bytedance/bytemd/compare/v1.10.9...v1.10.10) (2021-07-22)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.9](https://github.com/bytedance/bytemd/compare/v1.10.8...v1.10.9) (2021-07-22)
+
+
+### Bug Fixes
+
+* svelte ssr compatible ([a3c9afb](https://github.com/bytedance/bytemd/commit/a3c9afb724413ad83d6718ec90933eb1391eba6f))
+
+
+
+
+
+## [1.10.8](https://github.com/bytedance/bytemd/compare/v1.10.7...v1.10.8) (2021-07-11)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.7](https://github.com/bytedance/bytemd/compare/v1.10.6...v1.10.7) (2021-07-11)
+
+
+### Bug Fixes
+
+* **toc:** calculate currentHeadingIndex with correct index ([#104](https://github.com/bytedance/bytemd/issues/104)) ([6eb4dc4](https://github.com/bytedance/bytemd/commit/6eb4dc453fbd737f130bab24f7196500a3bf173c)), closes [#103](https://github.com/bytedance/bytemd/issues/103)
+
+
+
+
+
+## [1.10.6](https://github.com/bytedance/bytemd/compare/v1.10.5...v1.10.6) (2021-07-08)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.5](https://github.com/bytedance/bytemd/compare/v1.10.4...v1.10.5) (2021-07-08)
+
+**Note:** Version bump only for package bytemd
+
+
+
+
+
+## [1.10.4](https://github.com/bytedance/bytemd/compare/v1.10.3...v1.10.4) (2021-07-08)
+
+
+### Bug Fixes
+
+* reactive locale props ([d9d068c](https://github.com/bytedance/bytemd/commit/d9d068ccef8462d7efe86ece563cdbca1b5990c9))
+* refine max length prop ([657b4d3](https://github.com/bytedance/bytemd/commit/657b4d3e849d424824eae719b334fdc519853ae8))
+* use import instead of require ([#102](https://github.com/bytedance/bytemd/issues/102)) ([0e0a566](https://github.com/bytedance/bytemd/commit/0e0a5666f580e0b565051e1bb91c97e95f693ba1))
+
+
+
+
+
 ## [1.10.2](https://github.com/bytedance/bytemd/compare/v1.10.1...v1.10.2) (2021-07-02)
 
 **Note:** Version bump only for package bytemd

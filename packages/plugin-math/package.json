@@ -1,6 +1,6 @@
 {
   "name": "@bytemd/plugin-math",
-  "version": "1.10.2",
+  "version": "1.10.13",
   "description": "ByteMD plugin to support math formula",
   "author": "Rongjian Zhang <pd4d10@gmail.com>",
   "license": "MIT",
@@ -19,12 +19,12 @@
     "lib"
   ],
   "dependencies": {
-    "@types/katex": "^0.11.0",
+    "@types/katex": "^0.11.1",
     "katex": "^0.12.0",
     "remark-math": "^4.0.0"
   },
   "devDependencies": {
-    "bytemd": "^1.10.2"
+    "bytemd": "^1.10.13"
   },
   "peerDependencies": {
     "bytemd": "^1.5.0"
