@@ -1,14 +1,15 @@
-# @bytemd/plugin-{{name}}
+# @hashmd/plugin-{{name}}
 
-[![npm](https://img.shields.io/npm/v/@bytemd/plugin-{{name}}.svg)](https://npm.im/@bytemd/plugin-{{name}})
+[![npm](https://img.shields.io/npm/v/@hashmd/plugin-{{name}}.svg)](https://npm.im/@hashmd/plugin-{{name}})
 
 {{{desc}}}
 
 ## Usage
 
 ```js
-import { Editor } from 'bytemd'
-import {{importedName}} from '@bytemd/plugin-{{name}}'
+{{{header}}}
+import { Editor } from 'hashmd'
+import {{importedName}} from '@hashmd/plugin-{{name}}'
 
 new Editor({
   target: document.body,

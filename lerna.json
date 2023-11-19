@@ -1,10 +1,6 @@
 {
-  "packages": ["packages/*"],
-  "version": "1.10.13",
-  "command": {
-    "publish": {
-      "conventionalCommits": true,
-      "registry": "https://registry.npmjs.org"
-    }
-  }
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": true,
+  "version": "1.21.0",
+  "registry": "https://registry.npmjs.org"
 }

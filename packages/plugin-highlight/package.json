@@ -1,30 +1,37 @@
 {
-  "name": "@bytemd/plugin-highlight",
-  "version": "1.10.13",
-  "description": "ByteMD plugin to highlight code blocks",
-  "author": "Rongjian Zhang <pd4d10@gmail.com>",
-  "license": "MIT",
+  "name": "@hashmd/plugin-highlight",
+  "version": "1.21.0",
+  "description": "HashMD plugin to highlight code blocks",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bytedance/bytemd.git",
+    "url": "https://github.com/pd4d10/hashmd.git",
     "directory": "packages/plugin-highlight"
   },
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "unpkg": "dist/index.min.js",
-  "jsdelivr": "dist/index.min.js",
-  "types": "lib/index.d.ts",
+  "license": "MIT",
+  "author": "Rongjian Zhang",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./locales/*": "./locales/*"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "lib"
+    "locales"
   ],
   "dependencies": {
-    "highlight.js": "^10.7.3"
+    "highlight.js": "^11.9.0"
   },
   "devDependencies": {
-    "bytemd": "^1.10.13"
+    "hashmd": "workspace:*"
   },
   "peerDependencies": {
-    "bytemd": "^1.5.0"
+    "hashmd": "^1.5.0"
   }
 }

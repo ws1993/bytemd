@@ -1,19 +1,32 @@
-import type { BytemdPlugin } from 'bytemd'
-import type { Mermaid } from 'mermaid'
-import type mermaidAPI from 'mermaid/mermaidAPI'
-import { icons } from './icons'
-import en from './locales/en.json'
+import { icons } from "./icons";
+import en from "./locales/en.json";
+import { appendBlock, type Plugin } from "hashmd";
+import type { default as Mermaid, MermaidConfig } from "mermaid";
 
-export interface BytemdPluginMermaidOptions extends mermaidAPI.Config {
-  locale?: Partial<typeof en>
+type Locale = {
+  mermaid: string;
+  flowchart: string;
+  sequence: string;
+  class: string;
+  state: string;
+  er: string;
+  uj: string;
+  gantt: string;
+  pie: string;
+  mindmap: string;
+  timeline: string;
+};
+
+export interface HashmdPluginMermaidOptions extends MermaidConfig {
+  locale?: Partial<Locale>;
 }
 
 export default function mermaid({
   locale: _locale,
   ...mermaidConfig
-}: BytemdPluginMermaidOptions = {}): BytemdPlugin {
-  const locale = { ...en, ..._locale } as typeof en
-  let m: Mermaid
+}: HashmdPluginMermaidOptions = {}): Plugin {
+  const locale = { ...en, ..._locale } as Locale;
+  let m: typeof Mermaid;
 
   const actionItems = [
     {
@@ -101,72 +114,83 @@ another task      : 24d`,
 "Cats" : 85
 "Rats" : 15`,
     },
-  ]
+    {
+      title: locale.mindmap,
+      code: `mindmap
+      Root
+          A
+            B
+            C
+    `,
+    },
+    {
+      title: locale.timeline,
+      code: `timeline
+      title History of Social Media Platform
+      2002 : LinkedIn
+      2004 : Facebook
+           : Google
+      2005 : Youtube
+      2006 : Twitter
+      `,
+    },
+  ];
 
   return {
     viewerEffect({ markdownBody }) {
-      ;(async () => {
+      (async () => {
         const els = markdownBody.querySelectorAll<HTMLElement>(
-          'pre>code.language-mermaid'
-        )
-        if (els.length === 0) return
+          "pre>code.language-mermaid",
+        );
+        if (els.length === 0) return;
 
         if (!m) {
-          m = await import('mermaid').then((c) => c.default)
+          m = await import("mermaid").then((c) => c.default);
           if (mermaidConfig) {
-            m.initialize(mermaidConfig)
+            m.initialize(mermaidConfig);
           }
         }
 
         els.forEach((el, i) => {
-          const pre = el.parentElement!
-          const source = el.innerText
+          const pre = el.parentElement!;
+          const source = el.innerText;
 
-          const container = document.createElement('div')
-          container.classList.add('bytemd-mermaid')
-          container.style.lineHeight = 'initial' // reset line-height
-          pre.replaceWith(container)
+          const container = document.createElement("div");
+          container.classList.add("hashmd-mermaid");
+          container.style.lineHeight = "initial"; // reset line-height
+          pre.replaceWith(container);
 
-          try {
-            m.render(
-              `bytemd-mermaid-${Date.now()}-${i}`,
-              source,
-              (svgCode) => {
-                container.innerHTML = svgCode
-              },
+          m.render(
+            `hashmd-mermaid-${Date.now()}-${i}`,
+            source,
+            // @ts-ignore
+            container,
+          )
+            .then((svgCode) => {
               // @ts-ignore
-              container
-            )
-          } catch (err) {
-            // console.error(err);
-          }
-        })
-      })()
+              container.innerHTML = svgCode.svg;
+            })
+            .catch((err) => {
+              // console.error(err);
+            });
+        });
+      })();
     },
-    actions: [
+    toolbar: [
       {
+        type: "multiple",
         title: locale.mermaid,
         icon: icons.mermaid,
-        cheatsheet: '```mermaid',
-        handler: {
-          type: 'dropdown',
-          actions: actionItems.map(({ title, code }) => ({
-            title,
-            handler: {
-              type: 'action',
-              click({ editor, appendBlock, codemirror }) {
-                const { line } = appendBlock('```mermaid\n' + code + '\n```')
-                editor.setSelection(
-                  codemirror.Pos(line + 1, 0),
-                  codemirror.Pos(line + code.split('\n').length)
-                )
-                editor.focus()
-              },
-            },
-          })),
-          ...locale,
-        },
+        actions: actionItems.map(({ title, code }) => ({
+          title,
+          click({ detail: { editor } }) {
+            appendBlock(editor, code, {
+              prefix: "```mermaid\n",
+              suffix: "\n```",
+            });
+          },
+        })),
       },
     ],
-  }
+  };
 }

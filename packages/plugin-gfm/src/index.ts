@@ -1,62 +1,61 @@
-import type { BytemdPlugin } from 'bytemd'
-import en from './locales/en.json'
-import remarkGfm, { RemarkGfmOptions } from 'remark-gfm'
-import { icons } from './icons'
+import { icons } from "./icons";
+import en from "./locales/en.json";
+import { appendBlock, replaceLines, type Plugin, wrapText } from "hashmd";
+import remarkGfm, { Options } from "remark-gfm";
 
-export interface BytemdPluginGfmOptions extends RemarkGfmOptions {
-  locale?: Partial<typeof en>
+type Locale = {
+  strike: string;
+  strikeText: string;
+  task: string;
+  taskText: string;
+  table: string;
+  tableHeading: string;
+};
+
+export interface HashmdPluginGfmOptions extends Options {
+  locale?: Partial<Locale>;
 }
 
 export default function gfm({
   locale: _locale,
   ...remarkGfmOptions
-}: BytemdPluginGfmOptions = {}): BytemdPlugin {
-  const locale = { ...en, ..._locale } as typeof en
+}: HashmdPluginGfmOptions = {}): Plugin {
+  const locale = { ...en, ..._locale } as Locale;
 
   return {
-    remark: (p) => p.use(remarkGfm, remarkGfmOptions),
-    actions: [
+    remark: (processor) => processor.use(remarkGfm, remarkGfmOptions),
+    toolbar: [
       {
+        type: "single",
         title: locale.strike,
-        icon: icons.strikethrough,
+        icon: icons.strike,
         cheatsheet: `~~${locale.strikeText}~~`,
-        handler: {
-          type: 'action',
-          click({ wrapText, editor }) {
-            wrapText('~~')
-            editor.focus()
-          },
+        click({ detail: { editor } }) {
+          wrapText(editor, "~~");
         },
       },
       {
+        type: "single",
         title: locale.task,
         icon: icons.task,
         cheatsheet: `- [ ] ${locale.taskText}`,
-        handler: {
-          type: 'action',
-          click({ replaceLines, editor }) {
-            replaceLines((line) => '- [ ] ' + line)
-            editor.focus()
-          },
+        click({ detail: { editor } }) {
+          replaceLines(editor, (line) => "- [ ] " + line);
         },
       },
       {
+        type: "single",
         title: locale.table,
         icon: icons.table,
-        handler: {
-          type: 'action',
-          click({ editor, appendBlock, codemirror }) {
-            const { line } = appendBlock(
-              `| ${locale.tableHeading} |  |\n| --- | --- |\n|  |  |\n`
-            )
-            editor.setSelection(
-              codemirror.Pos(line, 2),
-              codemirror.Pos(line, 2 + locale.tableHeading.length)
-            )
-            editor.focus()
-          },
+        click({ detail: { editor } }) {
+          appendBlock(editor, locale.tableHeading, {
+            prefix: "| ",
+            suffix: ` |  |
+| --- | --- |
+|  |  |`,
+          });
         },
       },
     ],
-  }
+  };
 }

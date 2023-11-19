@@ -1,21 +1,8 @@
-import type { BytemdPlugin } from 'bytemd'
-// @ts-ignore
-import rehypeHighlight from 'rehype-highlight'
+import type { Plugin } from "hashmd";
+import rehypeHighlight, { Options } from "rehype-highlight";
 
-export interface BytemdPluginHighlightSsrOptions {
-  prefix?: string
-  subset?: boolean | string[]
-  ignoreMissing?: boolean
-  plainText?: string[]
-  aliases?: Record<string, string[]>
-}
-
-export default function highlightSsr({
-  subset = false,
-  ignoreMissing = true,
-  ...rest
-}: BytemdPluginHighlightSsrOptions = {}): BytemdPlugin {
+export default function highlightSsr(options: Options = {}): Plugin {
   return {
-    rehype: (u) => u.use(rehypeHighlight, { subset, ignoreMissing, ...rest }),
-  }
+    rehype: (processor) => processor.use<any, any>(rehypeHighlight, options),
+  };
 }

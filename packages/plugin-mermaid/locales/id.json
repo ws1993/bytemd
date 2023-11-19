@@ -1,0 +1,13 @@
+{
+  "class": "Diagram kelas",
+  "er": "Diagram hubungan Entitas",
+  "flowchart": "Bagan alur",
+  "gantt": "Bagan Gantt",
+  "mermaid": "Diagram Mermaid",
+  "mindmap": "Mindmap",
+  "pie": "Bagan pai",
+  "sequence": "Diagram urutan",
+  "state": "Diagram kondisi",
+  "timeline": "Linimasa",
+  "uj": "Diagram perjalanan pengguna"
+}

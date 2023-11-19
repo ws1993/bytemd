@@ -1,14 +1,15 @@
-# @bytemd/plugin-highlight
+# @hashmd/plugin-highlight
 
-[![npm](https://img.shields.io/npm/v/@bytemd/plugin-highlight.svg)](https://npm.im/@bytemd/plugin-highlight)
+[![npm](https://img.shields.io/npm/v/@hashmd/plugin-highlight.svg)](https://npm.im/@hashmd/plugin-highlight)
 
-ByteMD plugin to highlight code blocks
+HashMD plugin to highlight code blocks
 
 ## Usage
 
 ```js
-import { Editor } from 'bytemd'
-import highlight from '@bytemd/plugin-highlight'
+import highlight from "@hashmd/plugin-highlight";
+import { Editor } from "hashmd";
+import "highlight.js/styles/default.css";
 
 new Editor({
   target: document.body,
@@ -18,7 +19,7 @@ new Editor({
       // ... other plugins
     ],
   },
-})
+});
 ```
 
 ## License
